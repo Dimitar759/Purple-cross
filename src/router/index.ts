@@ -1,18 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import EmployeeListPage from '../pages/EmployeeListPage.vue'
-import EmployeeCreatePage from '../pages/EmployeeCreatePage.vue'
-import EmployeeDetailsPage from '../pages/EmployeeDetailsPage.vue'
 
 export default createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: EmployeeListPage },
-    { path: '/create', component: EmployeeCreatePage },
-    { path: '/employee/:code', component: EmployeeDetailsPage, props: true },
+    {
+      path: '/',
+      component: () => import('../pages/EmployeeListPage.vue'),
+    },
+    {
+      path: '/create',
+      component: () => import('../pages/EmployeeCreatePage.vue'),
+    },
+    {
+      path: '/employee/:code',
+      component: () => import('../pages/EmployeeDetailsPage.vue'),
+      props: true,
+    },
     {
       path: '/employee/:code/edit',
-      component: EmployeeDetailsPage,
+      component: () =>
+        import('../pages/EmployeeDetailsPage.vue'),
       props: route => ({ code: route.params.code, mode: 'edit' }),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/',
     },
   ],
 })
