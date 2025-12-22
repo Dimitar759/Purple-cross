@@ -19,9 +19,12 @@ const sortKey = ref<
 const sortDir = ref<"asc" | "desc">("asc");
 
 function setSort(key: typeof sortKey.value) {
-  if (sortKey.value === key)
-    sortDir.value = sortDir.value === "asc" ? "desc" : "asc";
-  else sortKey.value = key;
+  if (sortKey.value !== key) {
+    sortKey.value = key
+    sortDir.value = 'asc'
+  } else {
+    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
+  }
 }
 
 const filteredSorted = computed(() => {
@@ -61,12 +64,12 @@ function edit(code: string) {
 }
 
 watch(query, () => {
-  page.value = 1;
-});
+  page.value = 1
+})
 
 watch([sortKey, sortDir], () => {
-  page.value = 1;
-});
+  page.value = 1
+})
 
 </script>
 
@@ -84,7 +87,7 @@ watch([sortKey, sortDir], () => {
           Name
         </button>
         <button class="btn btn--ghost" @click="setSort('department')">
-          Dept
+          Department
         </button>
         <button class="btn btn--ghost" @click="setSort('dateOfEmployment')">
           Employment

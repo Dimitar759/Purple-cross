@@ -7,7 +7,7 @@ import { useEmployees } from '../composables/useEmployees'
 
 const router = useRouter()
 const { employees, count, deleteEmployee, exportEmployees, importEmployees } = useEmployees()
-
+const toast = ref<string | null>(null)
 const deleteTarget = ref<string | null>(null)
 const confirmOpen = computed(() => deleteTarget.value !== null)
 
@@ -15,7 +15,16 @@ const fileInput = ref<HTMLInputElement | null>(null)
 
 function onImport(e: Event) {
   const file = (e.target as HTMLInputElement).files?.[0]
-  if (file) importEmployees(file)
+  if (!file) return
+
+  try {
+    importEmployees(file)
+    toast.value = 'Employees imported successfully'
+  } catch {
+    toast.value = 'Invalid employee file'
+  }
+
+  setTimeout(() => (toast.value = null), 3000)
 }
 
 function requestDelete(code: string) {
@@ -38,6 +47,7 @@ function goCreate() {
 
 
 <template>
+  <div v-if="toast" class="toast">{{ toast }}</div>
   <div class="pageTitle">
     <div>
       <h1>Employees</h1>

@@ -129,3 +129,19 @@ th { text-align: left; font-size: 12px; color: var(--muted); user-select: none; 
   gap: 10px;
   margin-top: 12px;
 }
+
+.toast {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: rgba(17,24,39,0.95);
+  border: 1px solid var(--border);
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
