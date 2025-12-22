@@ -27,7 +27,43 @@ export function useEmployees() {
     employees.value = employees.value.filter(e => e.code !== code)
   }
 
+  function exportEmployees() {
+    const blob = new Blob(
+      [JSON.stringify(employees.value, null, 2)],
+      { type: 'application/json' }
+    )
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'employees.json'
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  function importEmployees(file: File) {
+    const reader = new FileReader()
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result as string)
+        if (!Array.isArray(data)) throw new Error()
+        employees.value = data
+      } catch {
+        alert('Invalid employee file')
+      }
+    }
+    reader.readAsText(file)
+  }
+
   const count = computed(() => employees.value.length)
 
-  return { employees, count, getByCode, createEmployee, updateEmployee, deleteEmployee }
+  return {
+    employees,
+    count,
+    getByCode,
+    createEmployee,
+    updateEmployee,
+    deleteEmployee,
+    exportEmployees,
+    importEmployees,
+  }
 }
