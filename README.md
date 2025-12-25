@@ -1,5 +1,43 @@
-# Vue 3 + TypeScript + Vite
+# Purple Cross – Employee Management Dashboard
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Features
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+### Employee List
+- Displays all employees in a sortable and filterable table
+- Shows:
+  - Full name
+  - Occupation
+  - Department
+  - Employment status (derived from date of employment)
+  - Termination status (derived from termination date)
+- Status labels follow the rules defined in the case study
+- Pagination for better performance and usability
+
+### Employee Actions
+- **View** employee details
+- **Edit** employee information
+- **Delete** employee with confirmation dialog
+
+### Create & Edit Employee
+- Form with validation for required fields
+- Prevents duplicate employee codes
+- Supports optional termination dates
+- Cancel and save actions behave as expected
+
+### Import / Export
+- Export employees to a JSON file
+- Import employees from a JSON file with basic validation
+
+### UI Enhancements
+- Header with application title and logged-in user badge
+- Toast notifications for actions (create, delete, import)
+- Responsive layout
+- Consistent spacing and alignment across pages
+
+---
+
+## Project Setup
+
+```bash
+npm install
+npm run dev
