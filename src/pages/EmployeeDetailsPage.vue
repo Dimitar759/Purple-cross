@@ -5,7 +5,9 @@ import EmployeeForm from "../components/EmployeeForm.vue";
 import { useEmployees } from "../composables/useEmployees";
 import type { Employee } from "../types/employee";
 import { employmentStatusLabel, terminationStatusLabel } from "../utils/dates";
+import { inject } from 'vue'
 
+const showToast = inject<(msg: string) => void>('showToast')
 const props = defineProps<{ code: string; mode?: "edit" }>();
 const router = useRouter();
 const { getByCode, updateEmployee } = useEmployees();
@@ -23,12 +25,14 @@ function goEdit() {
 
 function save(e: Employee) {
   try {
-    updateEmployee(props.code, e);
-    router.push(`/employee/${props.code}`);
+    updateEmployee(props.code, e)
+    showToast?.('Employee updated successfully')
+    router.push(`/employee/${props.code}`)
   } catch (err) {
-    alert((err as Error).message);
+    alert((err as Error).message)
   }
 }
+
 </script>
 
 <template>

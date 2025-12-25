@@ -4,26 +4,24 @@ import { useRouter } from "vue-router";
 import EmployeeTable from "../components/EmployeeTable.vue";
 import ConfirmDialog from "../components/ConfirmDialog.vue";
 import { useEmployees } from "../composables/useEmployees";
+import { inject } from 'vue'
+
+const showToast = inject<(msg: string) => void>('showToast')
 
 const router = useRouter();
 const { employees, count, deleteEmployee, exportEmployees, importEmployees } =
   useEmployees();
-const toast = ref<string | null>(null);
 const deleteTarget = ref<string | null>(null);
 const confirmOpen = computed(() => deleteTarget.value !== null);
 
 const fileInput = ref<HTMLInputElement | null>(null);
 
-function showToast(message: string) {
-  toast.value = message;
-  setTimeout(() => (toast.value = null), 2500);
-}
 
 function onImport(e: Event) {
   const file = (e.target as HTMLInputElement).files?.[0];
   if (file) {
     importEmployees(file);
-    showToast("Employees imported successfully");
+    showToast?.("Employees imported successfully");
   }
 }
 
@@ -33,10 +31,10 @@ function requestDelete(code: string) {
 
 function confirmDelete() {
   if (deleteTarget.value) {
-    deleteEmployee(deleteTarget.value);
-    showToast("Employee deleted successfully");
+    deleteEmployee(deleteTarget.value)
+    showToast?.('Employee deleted successfully')
   }
-  deleteTarget.value = null;
+  deleteTarget.value = null
 }
 
 function cancelDelete() {
@@ -49,7 +47,6 @@ function goCreate() {
 </script>
 
 <template>
-  <div v-if="toast" class="toast">{{ toast }}</div>
 
   <div class="pageTitle">
   <div class="pageTitle-left">

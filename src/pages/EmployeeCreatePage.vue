@@ -3,9 +3,11 @@ import { useRouter } from 'vue-router'
 import EmployeeForm from '../components/EmployeeForm.vue'
 import { useEmployees } from '../composables/useEmployees'
 import type { Employee } from '../types/employee'
+import { inject } from 'vue'
 
 const router = useRouter()
 const { createEmployee } = useEmployees()
+const showToast = inject<(msg: string) => void>('showToast')
 
 const emptyEmployee: Employee = {
   code: '',
@@ -19,11 +21,13 @@ const emptyEmployee: Employee = {
 function save(e: Employee) {
   try {
     createEmployee(e)
+    showToast?.('Employee created successfully')
     router.push('/')
   } catch (err) {
     alert((err as Error).message)
   }
 }
+
 
 function cancel() {
   router.push('/')
