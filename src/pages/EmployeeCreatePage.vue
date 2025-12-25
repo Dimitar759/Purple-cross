@@ -32,11 +32,13 @@ function cancel() {
 
 <template>
   <div class="pageTitle">
-    <div>
-      <h1>Create Employee</h1>
-      <div class="muted">Add a new record</div>
-    </div>
+  <div class="pageTitle-left">
+    <h1>Create Employee</h1>
+    <div class="muted">Add a new record</div>
   </div>
+
+  <div class="pageTitle-right"></div>
+</div>
 
   <EmployeeForm mode="create" :initial="emptyEmployee" @save="save" @cancel="cancel" />
 </template>

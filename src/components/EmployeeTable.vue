@@ -19,11 +19,11 @@ const sortKey = ref<
 const sortDir = ref<"asc" | "desc">("asc");
 
 function setSort(key: typeof sortKey.value) {
-  if (sortKey.value !== key) {
-    sortKey.value = key
-    sortDir.value = 'asc'
+  if (sortKey.value === key) {
+    sortDir.value = sortDir.value === "asc" ? "desc" : "asc";
   } else {
-    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
+    sortKey.value = key;
+    sortDir.value = "asc";
   }
 }
 
@@ -64,13 +64,12 @@ function edit(code: string) {
 }
 
 watch(query, () => {
-  page.value = 1
-})
+  page.value = 1;
+});
 
 watch([sortKey, sortDir], () => {
-  page.value = 1
-})
-
+  page.value = 1;
+});
 </script>
 
 <template>
@@ -83,13 +82,27 @@ watch([sortKey, sortDir], () => {
       />
       <div class="sort">
         <span class="muted">Sort:</span>
-        <button class="btn btn--ghost" @click="setSort('fullName')">
+        <button
+          class="btn btn--ghost"
+          :class="{ 'btn--active': sortKey === 'fullName' }"
+          @click="setSort('fullName')"
+        >
           Name
         </button>
-        <button class="btn btn--ghost" @click="setSort('department')">
+
+        <button
+          class="btn btn--ghost"
+          :class="{ 'btn--active': sortKey === 'department' }"
+          @click="setSort('department')"
+        >
           Department
         </button>
-        <button class="btn btn--ghost" @click="setSort('dateOfEmployment')">
+
+        <button
+          class="btn btn--ghost"
+          :class="{ 'btn--active': sortKey === 'dateOfEmployment' }"
+          @click="setSort('dateOfEmployment')"
+        >
           Employment
         </button>
       </div>

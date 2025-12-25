@@ -26,7 +26,6 @@ const form = reactive<Employee>({
 const errors = computed(() => {
   const e: Record<string, string> = {}
 
-  // Required fields
   if (!form.code.trim()) e.code = 'Code is required'
   if (!form.fullName.trim()) e.fullName = 'Full name is required'
   if (!form.occupation.trim()) e.occupation = 'Occupation is required'
@@ -35,7 +34,6 @@ const errors = computed(() => {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
-  // Employment date validation
   if (form.dateOfEmployment) {
     const d = new Date(form.dateOfEmployment)
 
@@ -46,16 +44,13 @@ const errors = computed(() => {
     }
   }
 
-  // Termination date validation
   if (form.terminationDate) {
-    const t = new Date(form.terminationDate)
+  const t = new Date(form.terminationDate)
 
-    if (Number.isNaN(t.getTime())) {
-      e.terminationDate = 'Invalid termination date'
-    } else if (t < today) {
-      e.terminationDate = 'Termination date cannot be in the past'
-    }
+  if (Number.isNaN(t.getTime())) {
+    e.terminationDate = 'Invalid termination date'
   }
+}
 
   return e
 })
